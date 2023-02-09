@@ -20,26 +20,33 @@ import dados from '.';
         </ul>
       </div>
       <div v-if="products.products.length > 0">
-         <div v-for="dado in products.products" :key="dado.id">
-        <ul>
-          <li>
-            <div class="dados" id="id">{{ dado.id }}</div>
-            <div class="dados" id="name">{{ dado.name }}</div>
-            <div class="dados" id="amount">{{ dado.amount }}</div>
-            <div class="dados" id="price">{{ dinheiro(dado.price) }}</div>
-            <div class="dados" id="action">
-              <router-link
-                v-bind:to="{ name: 'update', params: { id: dado.id } }"
-              >
-              <button class="btn btn-primary">Up</button>
-              </router-link>
-              <button v-on:click="excluirProduto(dado.id)" class="btn btn-danger ml-2">X</button>
-            </div>
-          </li>
-        </ul>
+        <div v-for="dado in products.products" :key="dado.id">
+          <ul>
+            <li>
+              <div class="dados" id="id">{{ dado.id }}</div>
+              <div class="dados" id="name">{{ dado.name }}</div>
+              <div class="dados" id="amount">{{ dado.amount }}</div>
+              <div class="dados" id="price">{{ dinheiro(dado.price) }}</div>
+              <div class="dados" id="action">
+                <router-link
+                  v-bind:to="{ name: 'update', params: { id: dado.id } }"
+                >
+                  <button class="btn btn-primary">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </router-link>
+                <button
+                  v-on:click="excluirProduto(dado.id)"
+                  class="btn btn-danger ml-2"
+                >
+                  <strong> X</strong>
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-      </div>
-     
+
       <hr />
     </div>
   </div>
@@ -56,24 +63,22 @@ export default {
 
     dinheiro(valor) {
       if (valor) {
-        valor =  valor.toFixed(2)
-        return "R$ " + valor
-      }
-      else{
-        return "R$ " + valor
+        let valorFinal = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(valor)
+        return valorFinal;
+      } else {
+        return "R$ -----";
       }
     },
 
-    async excluirProduto(id){
-      try{
-        await this.deleteProducts(id)
+    async excluirProduto(id) {
+      try {
+        await this.deleteProducts(id);
         //this.getProducts()
-        this.$router.go()
+        this.$router.go();
+      } catch (e) {
+        alert("Não foi possível excluir " + e);
       }
-      catch(e){
-        alert('Não foi possível excluir ' + e)
-      }
-    }
+    },
   },
   computed: {
     ...mapState(["products"]),
