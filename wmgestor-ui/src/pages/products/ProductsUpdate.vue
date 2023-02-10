@@ -27,20 +27,8 @@
         />
         <div class="row mt-3">
           <select id="categorias" v-model="produto.category">
-            <option value="">
-              Escolha a categoria
-            </option>
-            <option value="1">
-              Eletrônico
-            </option>
-            <option value="2">
-              Papelaria
-            </option>
-            <option value="3">
-              Cosméticos
-            </option>
-            <option value="4">
-              Vestuário
+            <option v-for="categoria in categories.categories" :key="categoria.id" v-bind:value="categoria.id">
+              {{ categoria.name }}
             </option>
           </select>
         </div>
@@ -82,9 +70,11 @@ export default {
 
   computed: {
     ...mapState(["products"]),
+    ...mapState(["categories"]),
   },
   methods: {
     ...mapActions("products", ["findProductById", "updateProducts"]),
+    ...mapActions("categories", ["getCategories"]),
 
     async updateProduto(produto, preco) {
       preco = preco.replace(/\./g, "");
@@ -111,13 +101,16 @@ export default {
   },
 
   created() {
+    this.getCategories();
     this.findProductById(this.$route.params.id);
   },
+
 };
 </script>
 
 <style lang="scss" scoped>
 .main {
+
   width: 100%;
   display: flex;
   flex-direction: column;

@@ -2,55 +2,41 @@
   <div class="main">
     <h1>Novos Produtos</h1>
     <div class="form">
-      <form>
-        <div class="row">
-          <label for="">Descrição</label>
-          <input v-model="form.name" class="ml-3" type="text" />
+      <div class="row">
+        <label for="">Descrição</label>
+        <input v-model="form.name" class="ml-3" type="text" />
+      </div>
+      <div class="row">
+        <label for="">Quantidade</label>
+        <input v-model="form.amount" class="ml-3" type="text" />
+      </div>
+      <div class="row2">
+        <label for="preço">Preço</label>
+        <input
+          v-model.lazy="price"
+          v-money="money"
+          type="text"
+          class="ml-3"
+        />
+        <div class="row mt-3">
+          <select id="categorias" v-model="form.category">
+            <option v-for="categoria in categories.categories" :key="categoria.id" v-bind:value="categoria.id">
+              {{ categoria.name }}
+            </option>
+          </select>
         </div>
-        <div class="row">
-          <label for="">Quantidade</label>
-          <input v-model="form.amount" class="ml-3" type="text" />
-        </div>
-        <div class="row2">
-          <label for="preço">Preço</label>
-          <input
-            v-model.lazy="price"
-            v-money="money"
-            type="text"
-            class="ml-2"
-          />
-          <div class="row mt-3">
-            <select id="categorias" v-model="form.category">
-              <option value="">
-                Escolha a categoria
-              </option>
-              <option value="1">
-                Eletrônico
-              </option>
-              <option value="2">
-                Papelaria
-              </option>
-              <option value="3">
-                Cosméticos
-              </option>
-              <option value="4">
-                Vestuário
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="botao">
-          <button v-on:click="addProdutos" class="btn btn-primary">
-            Cadastrar
-          </button>
-        </div>
-      </form>
+      </div>
+      <div class="botao">
+        <button v-on:click="addProdutos" class="btn btn-primary">
+          Cadastrar
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { VMoney } from "v-money";
 
 export default {
@@ -75,6 +61,7 @@ export default {
   },
   methods: {
     ...mapActions("products", ["addProducts"]),
+    ...mapActions("categories", ["getCategories"]),
 
     addProdutos(add) {
       this.price = this.price.replace(/\./g, ""); //trocando o ponto dos milhares por nada
@@ -92,17 +79,22 @@ export default {
       this.price = "";
     },
   },
+  created() {
+    this.getCategories();
+  },
+  computed: {
+    ...mapState(["categories"]),
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .main {
  
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  margin-bottom: 50px;
   .form {
     display: flex;
     flex-direction: column;
@@ -114,7 +106,7 @@ export default {
     // padding-right: 0.5%;
     .row {
       width: 100%;
-      padding: 1%;
+      padding: 1.4%;
       display: flex;
       align-items: baseline;
       justify-content: flex-start;
@@ -129,21 +121,6 @@ export default {
         border-bottom: 1px solid grey;
       }
       input:focus {
-        outline: none;
-      }
-      #categorias {
-        width: 40%;
-        border: none;
-        background-color: white;
-        border-bottom: 1px solid grey;
-        margin-left: 4%;
-        align-items: flex-end;
-        
-        option{
-          direction: rtl;
-        }
-      }
-      #categorias:focus {
         outline: none;
       }
     }
