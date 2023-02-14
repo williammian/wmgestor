@@ -8,6 +8,10 @@
       <h4>{{ message }}</h4>
     </div>
 
+    <div v-if="produto.path" class="image">
+      <img :src="'photos/' + produto.path" alt="">
+    </div>
+
     <div class="form">
       <div class="row">
         <label for="">Descrição</label>
@@ -42,6 +46,9 @@
           Atualizar
         </button>
       </div>
+    </div>
+    <div class="upload">
+      <router-link :to="{ name: 'upload', params: { id:produto.id } }">Upload</router-link>
     </div>
   </div>
 </template>
@@ -115,6 +122,12 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  .image {
+    max-width: 40%;
+    img{
+      max-width: 50%;
+    }
+  }  
   .form {
     display: flex;
     flex-direction: column;

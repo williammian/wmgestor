@@ -15,6 +15,7 @@ import dados from '.';
             <div class="dados" id="descricao"><strong>Descrição</strong></div>
             <div class="dados" id="amount"><strong>Quantidade</strong></div>
             <div class="dados" id="price"><strong>Preço</strong></div>
+            <div class="dados" id="price"><strong>Image</strong></div>
             <div class="dados" id="action"><strong>Action</strong></div>
           </li>
         </ul>
@@ -27,6 +28,9 @@ import dados from '.';
               <div class="dados" id="name">{{ dado.name }}</div>
               <div class="dados" id="amount">{{ dado.amount }}</div>
               <div class="dados" id="price">{{ dinheiro(dado.price) }}</div>
+              <div class="dados" id="image">
+                <img :src="'photos/' + dado.path" :alt="dado.name">
+              </div>
               <div class="dados" id="action">
                 <router-link
                   v-bind:to="{ name: 'update', params: { id: dado.id } }"
@@ -135,6 +139,15 @@ export default {
     }
     #price {
       min-width: 14%;
+    }
+    #image {
+      max-width: 14%;
+      img{
+        max-width: 45%;
+      }
+    }
+    #action {
+      min-width: 10%;
     }
   }
 }

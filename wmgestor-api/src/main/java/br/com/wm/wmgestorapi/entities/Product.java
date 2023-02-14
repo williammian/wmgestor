@@ -22,6 +22,7 @@ public class Product implements Serializable {
 	private String name;
 	private Integer amount;
 	private Double price;
+	private String path;
 	
 	@ManyToOne
 	@JoinColumn(name = "categoryid")
@@ -30,12 +31,13 @@ public class Product implements Serializable {
 	public Product() {		
 	}
 
-	public Product(Long id, String name, Integer amount, Double price, Category category) {
+	public Product(Long id, String name, Integer amount, Double price, String path, Category category) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.amount = amount;
 		this.price = price;
+		this.path = path;
 		this.category = category;
 	}
 
@@ -77,6 +79,14 @@ public class Product implements Serializable {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	@Override
