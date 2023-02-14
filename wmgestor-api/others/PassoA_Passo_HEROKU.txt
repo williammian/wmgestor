@@ -1,0 +1,52 @@
+1- CRIAR PROJETO NO HEROKU
+
+2- RESOURCES -> add-ons -> add data base(Mysql or Postgres or Other)
+
+3 -CRIAR PROFILE-DEV( NO CASO SPRING BOOT)
+
+//exemplo do production profile 
+spring.datasource.url=${DATABASE_URL}
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.format_sql=false
+jwt.secret=${JWT_SECRET}
+
+//application.properties exemplo
+spring.profiles.active=prod
+
+spring.jpa.open-in-view=true
+
+4 -GERAR SCRIPT DO BANCO DE DADOS ATRAVÉS DO BANCO LOCAL 
+USAMOS UMA INTERFACE DE GERENCIAMENTO DE BANCO COMO POR EX. MYSQL_WORK_BENCH
+
+
+5- PARA RODAR SCRIPT NO BANCO DE DADOS 
+DASHBOARD -> SETTINGS -> CONFIG_VARS -> pega dados através url banco e coloca no Mysql workbanch
+
+mysql://baaca5f7b989d7:2584c394@us-cdbr-east-04.cleardb.com/heroku_852d192549e769c?reconnect=true
+
+user: baaca5f7b989d7
+
+password: 2584c394
+
+hostname:us-cdbr-east-04.cleardb.com
+
+dbName: heroku_852d192549e769c
+
+6 -Install CLI Heroku
+
+
+7 - Criar arquivo system.properties -> setar versao do java -> java.runtime.version=11
+
+8 -
+//comando heroku para incluir projeto
+heroku git:remote -a myapp
+//exemple
+heroku git:remote -a fullstack-ti100
+
+Send to Heroku:  
+git add .
+git commit -m "Deploy app to Heroku"
+git push heroku master
+
+heroku logs --tail
