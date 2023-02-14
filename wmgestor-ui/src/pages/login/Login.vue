@@ -20,7 +20,7 @@ import { mapActions } from 'vuex'
 export default {
   data() {
     return {
-      username: this.$route.params.username ? this.$route.params.username : " ",
+      username: this.$route.params.username ? this.$route.params.username : "",
       password: "",
     };
   },

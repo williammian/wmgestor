@@ -1,17 +1,17 @@
 <template>
   <div class="main">
     <div class="login">
-      <div v-if="token || session" class="saudacao mr-4 mt-2">
+      <div v-if="token.length > 12 || session" class="saudacao mr-4 mt-2">
         <h6>Bem vindo {{ username }}</h6>
       </div>
       <div class="buttons">
-        <router-link to="/login" v-if="!token && !session">
+        <router-link to="/login" v-if="token.length < 12 && !session">
           <button class="btn btn-primary btn-sm mr-3">Login</button>
         </router-link>
-        <button v-if="token || session" @click="resetLogin" class="btn btn-primary btn-sm">
+        <button v-if="token.length > 12 || session" @click="resetLogin" class="btn btn-primary btn-sm">
           Logout
         </button>
-        <router-link v-if="!token && !session" class="link ml-3 mt-2" to="/cadastro">
+        <router-link v-if="token.length < 12 && !session" class="link ml-3 mt-2" to="/cadastro">
           <h6>Cadastro</h6>
         </router-link>
       </div>

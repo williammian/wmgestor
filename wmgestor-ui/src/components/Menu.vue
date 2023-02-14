@@ -16,10 +16,10 @@
       <router-link to="/about">
         <li>Sobre nós</li>
       </router-link>
-      <router-link v-if="session || token" to="/categories">
+      <router-link v-if="session || token.length > 12" to="/categories">
         <li>Categories</li>
       </router-link>
-      <router-link v-if="session || token" to="/products">
+      <router-link v-if="session || token.length > 12" to="/products">
         <li>Produtos</li>
       </router-link>
     </ul>
